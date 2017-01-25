@@ -1,0 +1,99 @@
+------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------
+-- 
+-- The AI Graph Router
+--
+-- Contains:
+-- - Schema Tables
+-- - Initial Data
+--
+------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------
+-- 
+-- Comments: File Created for the AI Graph Router Project, edited and created by: Guilherme B.Lamounier
+------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------
+
+CREATE TABLE graph (
+    id int NOT NULL,
+    label varchar(32)
+);
+
+
+CREATE TABLE node (
+    id int NOT NULL,
+    graph_id int NOT NULL,
+    label varchar(32),
+    index int,
+    x double,
+    y double
+);
+
+CREATE TABLE edge (
+    id int NOT NULL,
+    graph_id int NOT NULL,
+    v1 int,
+    v2 int,
+    v1index int,
+    v2index int,
+    weight double
+);
+
+
+CREATE TABLE shortest_path (
+    id int NOT NULL,
+    graph_id int NOT NULL,
+    distance double,
+    v1 int,
+    v2 int
+);
+
+CREATE TABLE shortest_path_edges (
+    sp_id int NOT NULL,
+    se_id int NOT NULL
+);
+
+-----------------------------------------------------------------------------------------------------------------
+-- Generic Sequence Generator
+-----------------------------------------------------------------------------------------------------------------
+-- Table Generator for all Entities on Game
+-----------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------- 
+CREATE TABLE generic_sequence_generator (
+    gen_key varchar(255),
+    gen_value int
+);
+
+
+-- Table Generator Adjustment: PK Name is case sensitive
+INSERT INTO generic_sequence_generator (gen_key, gen_value) VALUES ('Graph', 0);
+INSERT INTO generic_sequence_generator (gen_key, gen_value) VALUES ('Node', 0);
+INSERT INTO generic_sequence_generator (gen_key, gen_value) VALUES ('Edge', 0);
+INSERT INTO generic_sequence_generator (gen_key, gen_value) VALUES ('ShortestPath', 0);
+
+
+
+---------------------------------------------------------- Primary Keys ----------------------------------------
+ALTER TABLE  graph
+    ADD CONSTRAINT pk_graph PRIMARY KEY (id);
+
+ALTER TABLE  node
+    ADD CONSTRAINT pk_node PRIMARY KEY (id);
+
+ALTER TABLE  edge
+    ADD CONSTRAINT pk_edge PRIMARY KEY (id);
+
+ALTER TABLE  shortest_path
+    ADD CONSTRAINT pk_shortest_path PRIMARY KEY (id);
+----------------------------------------------------------- Foreign Keys -----------------------------------------
+
+
+ALTER TABLE  node
+    ADD CONSTRAINT fk_graph_id FOREIGN KEY (graph_id) REFERENCES graph(id);
+
+ALTER TABLE  edge
+    ADD CONSTRAINT fk_graph_id FOREIGN KEY (graph_id) REFERENCES graph(id);
+
+ALTER TABLE  shortest_path
+    ADD CONSTRAINT fk_graph_id FOREIGN KEY (graph_id) REFERENCES graph(id);
+
