@@ -32,3 +32,7 @@ Graph Building
    there are separators on the menu that divides each algorithm family, the initial ones targets the 
    Shortest Path problem, the second section targets the Traveling Salesman Problem (TSP) and the last 
    section targets the Vehicle Routing Problem (VRP) and Vehicle Routing Problem with Time Windows (VRP-TW) 
+
+![alt tag](https://a.fsdn.com/con/app/proj/tccrouter/screenshots/234230.jpg/1)
+![alt tag](https://a.fsdn.com/con/app/proj/tccrouter/screenshots/234236.jpg/1)
+![alt tag](https://a.fsdn.com/con/app/proj/tccrouter/screenshots/234234.jpg/1)
