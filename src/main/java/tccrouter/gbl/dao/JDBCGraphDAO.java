@@ -4,11 +4,6 @@ import tccrouter.diamante.core.graph.Edge;
 import tccrouter.diamante.core.graph.Graph;
 import tccrouter.gbl.common.entity.ShortestPath;
 
-/**
- * 
- * @author guilherme becker
- *
- */
 public interface JDBCGraphDAO {
 
 	public void storeGraph(String graphName);

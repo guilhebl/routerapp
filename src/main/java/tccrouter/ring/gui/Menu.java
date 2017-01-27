@@ -38,7 +38,7 @@ import javax.swing.JMenuItem;
  * Extends the JMenuBar class to add enhanced functionalities, necessary to improve
  * its usage in this program.
  */
-class Menu extends JMenuBar {
+public class Menu extends JMenuBar {
     
     /**
      * The parent menus in this menu bar.

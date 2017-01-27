@@ -44,6 +44,11 @@ import javax.swing.tree.TreeSelectionModel;
  */
 public class NavigationView extends JPanel {
     
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -249664510169416487L;
+
 	private static final String GRAPH_FOLDER = "graphs";
 	
     /**
@@ -53,7 +58,7 @@ public class NavigationView extends JPanel {
     /**
      * 
      */
-    ArrayList observers;
+    ArrayList<NavigationObserver> observers;
     /**
      * 
      */
@@ -75,7 +80,7 @@ public class NavigationView extends JPanel {
      * 
      */
     public NavigationView() {
-        observers = new ArrayList();
+        observers = new ArrayList<>();
         
         buildTree();
         

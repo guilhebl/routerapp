@@ -39,6 +39,11 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 public class NavigationTreeCellRenderer extends DefaultTreeCellRenderer {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4885443921760191736L;
+
+	/**
      * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(javax.swing.JTree, java.lang.Object, boolean, boolean, boolean, int, boolean)
      */
     public Component getTreeCellRendererComponent(JTree tree, Object value,

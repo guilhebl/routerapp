@@ -40,6 +40,10 @@ public class WorkspaceUIView extends UIView {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = -6403374871836836299L;
+	/**
+	 * 
+	 */
 	GraphWorkspace workspace;
 	
 	/**

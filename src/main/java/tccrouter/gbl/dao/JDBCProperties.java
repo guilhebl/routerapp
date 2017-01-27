@@ -4,8 +4,7 @@ package tccrouter.gbl.dao;
  * TO DO
  * The intent is to make a .properties file to read the DB properties dynamically,
  * but for the meanwhile edit Application Connection for your specific connection
- * 
- * @author guilherme becker
+
  *
  */
 public interface JDBCProperties {
