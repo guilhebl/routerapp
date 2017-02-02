@@ -66,7 +66,7 @@ public class AlgorithmController implements AlgorithmObserver {
 	    	Class c = Class.forName(className);
 	    	algorithms.put(className, c);
     	} catch (ClassNotFoundException exc) {
-    		JOptionPane.showMessageDialog(null,"Class not found","Algorithm loader",JOptionPane.ERROR_MESSAGE);
+    		//JOptionPane.showMessageDialog(null,"Class not found","Algorithm loader",JOptionPane.ERROR_MESSAGE);
     	}
     }
 
@@ -93,10 +93,10 @@ public class AlgorithmController implements AlgorithmObserver {
 	    	algorithms.put(fileName,alg);
     	}
     	catch (MalformedURLException exc) {
-			JOptionPane.showMessageDialog(null,"Invalid path","Algorithm loader",JOptionPane.ERROR_MESSAGE);
+			//JOptionPane.showMessageDialog(null,"Invalid path","Algorithm loader",JOptionPane.ERROR_MESSAGE);
     	}
     	catch (ClassNotFoundException exc) {
-    		JOptionPane.showMessageDialog(null,"Class not found","Algorithm loader",JOptionPane.ERROR_MESSAGE);
+    		//JOptionPane.showMessageDialog(null,"Class not found","Algorithm loader",JOptionPane.ERROR_MESSAGE);
     	}
     }
 

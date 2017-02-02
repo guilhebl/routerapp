@@ -57,7 +57,7 @@ import tccrouter.diamante.core.graph.layout.GraphLayout;
 import tccrouter.gbl.ui.AIPreferencesWindow;
 import tccrouter.gbl.ui.GASettings;
 import tccrouter.gbl.ui.GeneralSettings;
-import tccrouter.gbl.ui.JDBCGraphWindow;
+import tccrouter.gbl.ui.OpenGraphDialog;
 import tccrouter.gbl.ui.LocalSearchSettings;
 import tccrouter.gbl.ui.SimulatedAnnealingSettings;
 import tccrouter.gbl.ui.VRPSettings;
@@ -542,8 +542,8 @@ public class MainWindow extends JFrame {
 		 */
 		SAVE_JDBC_GRAPH_ACTION = new AbstractAction("Save") {
 			public void actionPerformed (ActionEvent evt) {
-				JDBCGraphWindow.getInstance().buildSaveWindow();
-				JDBCGraphWindow.getInstance().setVisible(true);			
+				OpenGraphDialog.getInstance().buildSaveWindow();
+				OpenGraphDialog.getInstance().setVisible(true);			
 			}
 		};
 		/**
@@ -551,8 +551,8 @@ public class MainWindow extends JFrame {
 		 */
 		OPEN_JDBC_GRAPH_ACTION = new AbstractAction("Open") {
 			public void actionPerformed (ActionEvent evt) {
-				JDBCGraphWindow.getInstance().buildLoadWindow();
-				JDBCGraphWindow.getInstance().setVisible(true);			
+				OpenGraphDialog.getInstance().buildLoadWindow();
+				OpenGraphDialog.getInstance().setVisible(true);			
 			}
 		};
 		
@@ -584,22 +584,22 @@ public class MainWindow extends JFrame {
 			}
 		};
 
-		LOAD_ALGORITHM_ANIMATION_ACTION = new AbstractAction("Load algorithm animation") {
-			public void actionPerformed (ActionEvent evt) {
-				daoFactory = AbstractDAOFactory.getDAOFactory(AbstractDAOFactory.XML_ANIMATION,null);
-				
-				XMLFileChooser fc = XMLFileChooser.getInstance();
-				fc.chooseOpenFile("." + File.separator + "user" + File.separator + "animations");
-				String xmlFileName = null;
-
-				if (fc.getLastSelectedFileName() != null
-					&& fc.getLastSelectedFileURL() != null) {
-					xmlFileName = fc.getLastSelectedFileName();
-					
-					uiFacade.loadAnimation(xmlFileName);
-				}
-			}
-		};
+//		LOAD_ALGORITHM_ANIMATION_ACTION = new AbstractAction("Load algorithm animation") {
+//			public void actionPerformed (ActionEvent evt) {
+//				daoFactory = AbstractDAOFactory.getDAOFactory(AbstractDAOFactory.XML_ANIMATION,null);
+//				
+//				XMLFileChooser fc = XMLFileChooser.getInstance();
+//				fc.chooseOpenFile("." + File.separator + "user" + File.separator + "animations");
+//				String xmlFileName = null;
+//
+//				if (fc.getLastSelectedFileName() != null
+//					&& fc.getLastSelectedFileURL() != null) {
+//					xmlFileName = fc.getLastSelectedFileName();
+//					
+//					uiFacade.loadAnimation(xmlFileName);
+//				}
+//			}
+//		};
 
 		EMPTY_GRAPH_ACTION = new AbstractAction("Empty graph") {
 			public void actionPerformed (ActionEvent evt) {

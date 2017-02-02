@@ -28,7 +28,6 @@ package tccrouter.ring.gui;
 
 import java.awt.Color;
 import java.awt.Point;
-import java.io.File;
 
 import tccrouter.diamante.core.command.Algorithm;
 import tccrouter.diamante.core.graph.Edge;
@@ -56,10 +55,6 @@ import tccrouter.ring.gui.grapheditionstate.GraphEditionUIState;
  */
 public class UIFacade implements NavigationObserver {
 
-    /**
-     * 
-     */
-    private static final String GRAPHS_PATH = "graphs";
     /**
      * 
      */
@@ -244,17 +239,17 @@ public class UIFacade implements NavigationObserver {
     /**
      * @param id
      */
-    public void openJDBCGraph(String id) {
-        AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(AbstractDAOFactory.JDBC_GRAPH,null);
-		
-		Graph newGraph = (Graph) daoFactory.readObject(id);
-		
-		if (newGraph != null) {
-			loadGraphEditionState(newGraph);
-			refreshViews();
-		}
-    }
-    
+//    public void openJDBCGraph(String id) {
+//        AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(AbstractDAOFactory.JDBC_GRAPH,null);
+//		
+//		Graph newGraph = (Graph) daoFactory.readObject(id);
+//		
+//		if (newGraph != null) {
+//			loadGraphEditionState(newGraph);
+//			refreshViews();
+//		}
+//    }
+//    
     public void loadAnimation(String name) {
         AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(AbstractDAOFactory.XML_ANIMATION,null);
         

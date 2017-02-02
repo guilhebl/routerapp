@@ -17,20 +17,25 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
-import tccrouter.gbl.dao.JDBCGraphDAOFactory;
 import tccrouter.ring.dao.AbstractDAOFactory;
+import tccrouter.ring.dao.XMLGraphDAOFactory;
 import tccrouter.ring.gui.UIFacade;
 
 /**
  */
-public class JDBCGraphWindow extends JDialog {
+public class OpenGraphDialog extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3616928020822123910L;
+		
 	/**
 	 * The unique instance of this class.
 	 */
-	protected static JDBCGraphWindow instance;	
+	protected static OpenGraphDialog instance;	
 	private JTextField graphName;
-	private JList graphsList;
+	private JList<String> graphsList;
 	private String[][] graphs;
 	
 	
@@ -44,7 +49,7 @@ public class JDBCGraphWindow extends JDialog {
 	/**
 	 * Creates an instance of this window
 	 */
-	protected JDBCGraphWindow() {				
+	protected OpenGraphDialog() {				
 	}
 	
 	/**
@@ -128,8 +133,8 @@ public class JDBCGraphWindow extends JDialog {
 			public void actionPerformed(ActionEvent evt) {
 				try {
 
-					daoFactory = AbstractDAOFactory.getDAOFactory(AbstractDAOFactory.JDBC_GRAPH,UIFacade.getInstance().getGraph());
-					UIFacade.getInstance().openJDBCGraph(getListItem(graphsList,graphs));
+					daoFactory = AbstractDAOFactory.getDAOFactory(AbstractDAOFactory.XML_GRAPH,UIFacade.getInstance().getGraph());
+					UIFacade.getInstance().openGraph(getListItem(graphsList,graphs));
 					
 					setVisible(false);
 				}
@@ -149,8 +154,8 @@ public class JDBCGraphWindow extends JDialog {
 		JLabel labelGraphName = new JLabel("Graph Name: ");
 		namePanel.add(labelGraphName, "North");
 		
-		daoFactory = AbstractDAOFactory.getDAOFactory(AbstractDAOFactory.JDBC_GRAPH,UIFacade.getInstance().getGraph());
-		graphs = ((JDBCGraphDAOFactory)daoFactory).findAllGraphs();
+		daoFactory = AbstractDAOFactory.getDAOFactory(AbstractDAOFactory.XML_GRAPH,UIFacade.getInstance().getGraph());
+		graphs = ((XMLGraphDAOFactory)daoFactory).findAllGraphs();
 		graphsList = makeList(graphs,6,namePanel);		
 		
 		JPanel okCancelPanel = new JPanel(new FlowLayout());
@@ -166,9 +171,9 @@ public class JDBCGraphWindow extends JDialog {
 				
 	}
 	
-	private JList makeList(final String[][] items, int visibleRows, Container parent) {
-		JList list = new JList(new AbstractListModel()	{
-			public Object getElementAt(int i) {
+	private JList<String> makeList(final String[][] items, int visibleRows, Container parent) {
+		JList<String> list = new JList<>(new AbstractListModel<String>()	{
+			public String getElementAt(int i) {
 				return items[i][0];				
 			}
 			
@@ -183,7 +188,7 @@ public class JDBCGraphWindow extends JDialog {
 		return list;
 	}
 	
-	public String getListItem(JList list, String[][] items) {
+	public String getListItem(JList<String> list, String[][] items) {
 		return items[list.getSelectedIndex()][1];
 	}
 	
@@ -191,8 +196,8 @@ public class JDBCGraphWindow extends JDialog {
 	 * Retrieves the unique instance to this class.
 	 * @return the unique instance to this class
 	 */
-	public static JDBCGraphWindow getInstance() {
-		if(instance == null) instance = new JDBCGraphWindow();
+	public static OpenGraphDialog getInstance() {
+		if(instance == null) instance = new OpenGraphDialog();
 		
 		return instance;
 	}

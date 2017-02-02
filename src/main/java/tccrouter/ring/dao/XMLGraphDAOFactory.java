@@ -101,4 +101,9 @@ public class XMLGraphDAOFactory extends AbstractDAOFactory {
 		
 	}
 
+	public String[][] findAllGraphs() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

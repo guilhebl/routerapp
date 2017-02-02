@@ -54,9 +54,7 @@ public class Main {
 			 * 
 			 * UIManager.setLookAndFeel(new SkinLookAndFeel());
 			 */
-
 			PlasticLookAndFeel.setCurrentTheme(new Silver());
-			// PlasticLookAndFeel.setMyCurrentTheme(new SkyGreen());
 			UIManager.setLookAndFeel(new PlasticXPLookAndFeel());
 		} catch (Exception exc) {
 			exc.printStackTrace();
