@@ -19,33 +19,42 @@ import tccrouter.gbl.vrp.common.entity.VRProblemModel;
 public class GeneralSettings extends JDialog {
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2282379280079695660L;
+	/**
 	 * The unique instance of this class.
 	 */
-	protected static GeneralSettings instance;
+	private static GeneralSettings instance;
 	/**
 	 * The requested clients from UI.
 	 */
-	TSProblemModel tModel = TSProblemModel.getInstance();
+	private TSProblemModel tModel = TSProblemModel.getInstance();
 
 	/**
 	 * The requested clients from UI.
 	 */
-	VRProblemModel vrpModel = VRProblemModel.getInstance();
+	private VRProblemModel vrpModel = VRProblemModel.getInstance();
 	
 	/**
 	 * Properties panel. Where the properties will be asked for.
 	 */
-	JPanel centerPanel;
+	private JPanel centerPanel;
 	/** 
 	 *  
 	 */	
-	JCheckBox saExecutionMeasureBox;
-	JCheckBox lsdExecutionMeasureBox;
-	JCheckBox pfihExecutionMeasureBox;
-	JCheckBox gaExecutionMeasureBox;
-	JCheckBox aStarExecutionMeasureBox;
+	private JCheckBox saExecutionMeasureBox;
+	private JCheckBox lsdExecutionMeasureBox;
+	private JCheckBox pfihExecutionMeasureBox;
+	private JCheckBox gaExecutionMeasureBox;
+	private JCheckBox aStarExecutionMeasureBox;
 	
-	final Action OK_ACTION = new AbstractAction("OK") {
+	private final Action OK_ACTION = new AbstractAction("OK") {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -7403020518639998876L;
+
 		public void actionPerformed (ActionEvent evt) {
 
 			/*
@@ -85,7 +94,12 @@ public class GeneralSettings extends JDialog {
 		}
 	};
 		
-	final Action RESTORE_DEFAULT_ACTION = new AbstractAction("Default Values") {
+	private final Action RESTORE_DEFAULT_ACTION = new AbstractAction("Default Values") {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -4748827697565258758L;
+
 		public void actionPerformed (ActionEvent evt) {
 			centerPanel = new JPanel(new FlowLayout());
 			
@@ -110,7 +124,12 @@ public class GeneralSettings extends JDialog {
 		}
 	};
 	
-	final Action CANCEL_ACTION = new AbstractAction("Cancel") {
+	private final Action CANCEL_ACTION = new AbstractAction("Cancel") {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = -3500227632944208756L;
+
 		public void actionPerformed (ActionEvent evt) {
 			setVisible(false);
 		}
@@ -119,7 +138,7 @@ public class GeneralSettings extends JDialog {
 	/**
 	 * Creates an instance of this class.
 	 */
-	protected GeneralSettings () {
+	private GeneralSettings () {
 		setTitle("General Configuration");
 		setBounds(50,50,320,320);
 

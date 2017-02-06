@@ -33,7 +33,7 @@ public class OpenGraphDialog extends JDialog {
 	/**
 	 * The unique instance of this class.
 	 */
-	protected static OpenGraphDialog instance;	
+	private static OpenGraphDialog instance;	
 	private JTextField graphName;
 	private JList<String> graphsList;
 	private String[][] graphs;
@@ -43,7 +43,7 @@ public class OpenGraphDialog extends JDialog {
 	 * The factory of the DAO object that will deal with secondary
 	 * graph input and output.
 	 */
-	AbstractDAOFactory daoFactory;
+	private AbstractDAOFactory daoFactory;
 	
 
 	/**
@@ -62,10 +62,15 @@ public class OpenGraphDialog extends JDialog {
 		this.setTitle("Save Graph");
 				
 		JButton okButton = new JButton(new AbstractAction("OK") {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -7487765719798522920L;
+
 			public void actionPerformed(ActionEvent evt) {
 				try {
 
-					daoFactory = AbstractDAOFactory.getDAOFactory(AbstractDAOFactory.JDBC_GRAPH,UIFacade.getInstance().getGraph());
+					daoFactory = AbstractDAOFactory.getDAOFactory(AbstractDAOFactory.XML_GRAPH,UIFacade.getInstance().getGraph());
 					daoFactory.setObjectName(graphName.getText());
 					daoFactory.saveObject();					
 					setVisible(false);
@@ -105,15 +110,17 @@ public class OpenGraphDialog extends JDialog {
 				
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().add(namePanel, BorderLayout.NORTH);
-		getContentPane().add(southPanel,BorderLayout.SOUTH);
-				
+		getContentPane().add(southPanel,BorderLayout.SOUTH);				
 	}
 
 	private JButton makeCancelButton() {
 		JButton cancelButton = new JButton(new AbstractAction("Cancel") {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 2053021883400837289L;
+
 			public void actionPerformed(ActionEvent evt) {
-				
-				
 				setVisible(false);
 			}
 		});
@@ -130,6 +137,11 @@ public class OpenGraphDialog extends JDialog {
 		this.setTitle("Open Graph");
 				
 		JButton okButton = new JButton(new AbstractAction("OK") {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -6536105582815272307L;
+
 			public void actionPerformed(ActionEvent evt) {
 				try {
 
@@ -173,6 +185,11 @@ public class OpenGraphDialog extends JDialog {
 	
 	private JList<String> makeList(final String[][] items, int visibleRows, Container parent) {
 		JList<String> list = new JList<>(new AbstractListModel<String>()	{
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 6510576197401709714L;
+
 			public String getElementAt(int i) {
 				return items[i][0];				
 			}
@@ -197,7 +214,9 @@ public class OpenGraphDialog extends JDialog {
 	 * @return the unique instance to this class
 	 */
 	public static OpenGraphDialog getInstance() {
-		if(instance == null) instance = new OpenGraphDialog();
+		if (instance == null) {
+			instance = new OpenGraphDialog();
+		}
 		
 		return instance;
 	}
