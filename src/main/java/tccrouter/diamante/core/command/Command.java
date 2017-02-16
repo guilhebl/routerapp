@@ -10,12 +10,12 @@ public abstract class Command
 
     protected Graph g;
     protected Memento memento;
-    protected Vector subcommands;
+    protected Vector<Command> subcommands;
 
     public Command(Graph g)
     {
         this.g = g;
-        subcommands = new Vector();
+        subcommands = new Vector<>();
     }
 
     public abstract void execute();
@@ -27,7 +27,7 @@ public abstract class Command
         subcommands.addElement(command);
     }
 
-    public Vector getSubCommands()
+    public Vector<Command> getSubCommands()
     {
         return subcommands;
     }

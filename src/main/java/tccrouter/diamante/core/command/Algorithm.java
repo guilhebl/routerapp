@@ -8,7 +8,7 @@ import tccrouter.diamante.core.graph.Graph;
 public abstract class Algorithm extends Command
 {
 
-    String name;
+    protected String name;
 
     public Algorithm(Graph g, String name)
     {

@@ -2,6 +2,7 @@ package tccrouter.gbl.common.entity;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import tccrouter.diamante.core.graph.Edge;
 
@@ -10,20 +11,20 @@ public class ShortestPath {
 	private int v1;
 	private int v2;	
 	private double distance;
-	private ArrayList path;
+	private List<ShortestConnection> path;
 	
 	public ShortestPath() {
 		v1 = -1;
 		v2 = -1;
 		distance = 0.0D;
-		path = new ArrayList();
+		path = new ArrayList<>();
 	}
 
 	public ShortestPath(int v1,int v2, double distance) {
 		this.v1 = v1;
 		this.v2 = v2;
 		this.distance = distance;
-		path = new ArrayList();
+		path = new ArrayList<>();
 	}
 	
 	public double getDistance() {
@@ -70,11 +71,11 @@ public class ShortestPath {
 		updateDistance();
 	}
 
-	public void updateShortestPath(ArrayList edgeSet) {
+	public void updateShortestPath(List<Edge> edgeSet) {
 		
-		path = new ArrayList();
+		path = new ArrayList<ShortestConnection>();
 		
-		for (Iterator iter = edgeSet.iterator(); iter.hasNext();) {
+		for (Iterator<Edge> iter = edgeSet.iterator(); iter.hasNext();) {
 			Edge element = (Edge) iter.next();
 			ShortestConnection sc = new ShortestConnection(element);
 			path.add(sc);	
@@ -89,12 +90,12 @@ public class ShortestPath {
 	 * 
 	 * @return all common nodes inside Path.
 	 */	
-	public ArrayList getNodeSet(ArrayList nodeIDs) {
+	public List<Integer> getNodeSet(List<Integer> nodeIDs) {
 
-		ArrayList nodeList = new ArrayList();
+		List<Integer> nodeList = new ArrayList<>();
 		boolean modified = false;
 		
-		for (Iterator iter = nodeIDs.iterator(); iter.hasNext();) {
+		for (Iterator<Integer> iter = nodeIDs.iterator(); iter.hasNext();) {
 			Integer element = (Integer) iter.next();
 			if (isNodeInPath(element.intValue())) {
 				    modified = true;
@@ -108,11 +109,11 @@ public class ShortestPath {
 		return nodeList;
 	}
 
-	public ArrayList getEdgeSet() {
+	public List<Edge> getEdgeSet() {
 
-		ArrayList edgeSet = new ArrayList();
-		for (Iterator iter = path.iterator(); iter.hasNext();) {
-			ShortestConnection element = (ShortestConnection) iter.next();
+		List<Edge> edgeSet = new ArrayList<>();
+		for (Iterator<ShortestConnection> iter = path.iterator(); iter.hasNext();) {
+			ShortestConnection element = iter.next();
 			Edge edge = element.getEdge();
 			edgeSet.add(edge);	
 		}
@@ -121,11 +122,9 @@ public class ShortestPath {
 	}	
 	public boolean isNodeInPath(int index) {
 
-		for (Iterator iter = path.iterator(); iter.hasNext();) {
-			ShortestConnection element = (ShortestConnection) iter.next();
-			
-			if ( (element.getV1() == index) || (element.getV2() == index) ) 
-			{
+		for (Iterator<ShortestConnection> iter = path.iterator(); iter.hasNext();) {
+			ShortestConnection element = iter.next();			
+			if ((element.getV1() == index) || (element.getV2() == index))	{
 				return true;
 			}
 		}
@@ -133,11 +132,10 @@ public class ShortestPath {
 		return false;
 	}
 	
-	public void updateDistance() {
-		
+	public void updateDistance() {		
 		distance = 0;
 		
-		for (Iterator iter = path.iterator(); iter.hasNext();) {
+		for (Iterator<ShortestConnection> iter = path.iterator(); iter.hasNext();) {
 			ShortestConnection element = (ShortestConnection) iter.next();
 			distance += element.getDistance();			
 		}

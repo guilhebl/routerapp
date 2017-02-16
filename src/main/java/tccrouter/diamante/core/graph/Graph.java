@@ -1,7 +1,7 @@
 package tccrouter.diamante.core.graph;
 
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Stack;
 import java.util.Vector;
 
@@ -22,20 +22,20 @@ public abstract class Graph
 {
 
     protected int currentCommand;
-    protected Vector commands;
-    protected Vector nodes;
-    protected Vector edges;
-    Vector observers;
-    Stack commandsStack;
+    protected Vector<Command> commands;
+    protected Vector<Node> nodes;
+    protected Vector<Edge> edges;
+    protected Vector<GraphObserver> observers;
+    protected Stack<Vector<Command>> commandsStack;
 
     public Graph()
     {
         currentCommand = 0;
-        commands = new Vector();
-        nodes = new Vector();
-        edges = new Vector();
-        observers = new Vector();
-        commandsStack = new Stack();
+        commands = new Vector<>();
+        nodes = new Vector<>();
+        edges = new Vector<>();
+        observers = new Vector<>();
+        commandsStack = new Stack<>();
     }
 
     public boolean e(int v1, int v2)
@@ -160,7 +160,7 @@ public abstract class Graph
     private void fireEvent(GraphEvent evt)
     {
 		GraphObserver obs;
-		Iterator i = observers.iterator(); 
+		Iterator<GraphObserver> i = observers.iterator(); 
 		
 		while (i.hasNext()) {
 			obs = (GraphObserver) i.next();
@@ -177,7 +177,7 @@ public abstract class Graph
 
     public void contextReturn(Algorithm alg)
     {
-        Vector oldCommands = (Vector)commandsStack.pop();
+        Vector<Command> oldCommands = commandsStack.pop();
         oldCommands.addElement(alg);
         commands = oldCommands;
         currentCommand = commands.size() - 1;
@@ -222,15 +222,11 @@ public abstract class Graph
         return commands.size();
     }
 
-    public Vector getCommands()
+    public Vector<Command> getCommands()
     {
         return commands;
     }
     
-    /*
-     * methods added by Guilherme Becker L. for the AI algorithms
-     * implementation
-     */
     /**
      * @param i
      * @param j 
@@ -250,7 +246,7 @@ public abstract class Graph
      * @param j
      * @param edgeSet the new Optimal path between the two nodes 
      */    	
-    public abstract void setShortestPath(int i, int j, ArrayList edgeSet);    
+    public abstract void setShortestPath(int i, int j, List<Edge> edgeSet);    
 
     /**
      * @param i

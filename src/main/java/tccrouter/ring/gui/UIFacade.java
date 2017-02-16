@@ -55,22 +55,21 @@ import tccrouter.ring.gui.grapheditionstate.GraphEditionUIState;
  */
 public class UIFacade implements NavigationObserver {
 
-    /**
-     * 
-     */
+    private static final String GRAPH_PATH = "graphs";
     private static final String ANIMATIONS_PATH = "animations";
+    
     /**
 	 * The unique instance to this class.
 	 */
-	protected static UIFacade instance;
+	private static UIFacade instance;
 	/**
 	 * The active graph.
 	 */
-	Graph graph;
+	private Graph graph;
 	/**
 	 * 
 	 */
-	UIContext context;
+	private UIContext context;
 	/**
 	 * 
 	 */
@@ -219,37 +218,29 @@ public class UIFacade implements NavigationObserver {
      * @see ring.gui.NavigationObserver#graphSelected(java.lang.String)
      */
     public void graphSelected(String name) {
-        openGraph(name);
+        openGraph(name, false);
     }
 
     /**
      * @param name
      */
-    public void openGraph(String name) {
+    public void openGraph(String name, boolean useAbsolutePath) {
         AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(AbstractDAOFactory.XML_GRAPH,null);
 		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-		Graph newGraph = (Graph) daoFactory.readObject(classloader.getResource(name).getFile());
+		Graph newGraph = null;
+		if (useAbsolutePath) {
+			newGraph = (Graph) daoFactory.readObject(name);	
+		} else {
+			newGraph = (Graph) daoFactory.readObject(classloader.getResource(GRAPH_PATH + "/" + name).getFile());
+		}
+		
 		
 		if (newGraph != null) {
 			loadGraphEditionState(newGraph);
 			refreshViews();
 		}
     }
-
-    /**
-     * @param id
-     */
-//    public void openJDBCGraph(String id) {
-//        AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(AbstractDAOFactory.JDBC_GRAPH,null);
-//		
-//		Graph newGraph = (Graph) daoFactory.readObject(id);
-//		
-//		if (newGraph != null) {
-//			loadGraphEditionState(newGraph);
-//			refreshViews();
-//		}
-//    }
-//    
+    
     public void loadAnimation(String name) {
         AbstractDAOFactory daoFactory = AbstractDAOFactory.getDAOFactory(AbstractDAOFactory.XML_ANIMATION,null);
         

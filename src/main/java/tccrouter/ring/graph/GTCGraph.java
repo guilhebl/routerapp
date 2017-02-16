@@ -1,7 +1,7 @@
 package tccrouter.ring.graph;
 
 import java.awt.Color;
-import java.util.ArrayList;
+import java.util.List;
 
 import tccrouter.diamante.core.graph.Edge;
 import tccrouter.diamante.core.graph.Graph;
@@ -424,9 +424,9 @@ public class GTCGraph extends Graph {
     /**
      * @param i
      * @param j
-     * @param edgeSet the new Optimal path between the two nodes 
+     * @param edges the new Optimal path between the two nodes 
      */    	
-	public void setShortestPath(int i, int j, ArrayList edgeSet) {
+	public void setShortestPath(int i, int j, List<Edge> edges) {
 		if (i > j) {
 			ShortestPath sp = shortestPaths[j][i];
 			
@@ -436,7 +436,7 @@ public class GTCGraph extends Graph {
 				sp.setV2(i);				
 			}
 			
-			sp.updateShortestPath(edgeSet);
+			sp.updateShortestPath(edges);
 			shortestPaths[j][i] = sp;
 		} else { 
 			ShortestPath sp = shortestPaths[i][j];
@@ -447,7 +447,7 @@ public class GTCGraph extends Graph {
 				sp.setV2(j);				
 			}
 			
-			sp.updateShortestPath(edgeSet);
+			sp.updateShortestPath(edges);
 			shortestPaths[i][j] = sp;
 		}		
 	}
@@ -486,5 +486,6 @@ public class GTCGraph extends Graph {
 			shortestPaths[i][j].updateDistance();
 		}				
 	}
+
 	
 }

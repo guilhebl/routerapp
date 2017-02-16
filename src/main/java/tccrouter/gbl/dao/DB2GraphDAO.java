@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import tccrouter.diamante.core.graph.Edge;
 import tccrouter.diamante.core.graph.Graph;
@@ -212,10 +212,10 @@ public class DB2GraphDAO extends JDBCDataAccessObject implements JDBCGraphDAO {
 				stmt.executeUpdate(sqlInsert);
 				
 				// ShortestPath atrributes
-				ArrayList edgeSet = sp.getEdgeSet();
+				List<Edge> edgeSet = sp.getEdgeSet();
 				
-				for (Iterator iter = edgeSet.iterator(); iter.hasNext();) {
-					Edge element = (Edge) iter.next();
+				for (Iterator<Edge> iter = edgeSet.iterator(); iter.hasNext();) {
+					Edge element = iter.next();
 					storeShortestConnection(element);
 				}							
 				
@@ -436,121 +436,6 @@ public class DB2GraphDAO extends JDBCDataAccessObject implements JDBCGraphDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}		
-	}
-	
-	private void retrieveShortestPaths(int graphId, Graph result) {
-		try { 
-
-			// get the data in database
-			String sqlSelect = "select * FROM shortest_path WHERE graph_id = " + graphId;
-
-			// Set the value
-			ResultSet rs = stmt.executeQuery(sqlSelect);
-
-			/*
-			 * Building the ShortestPath object with relative data fields.
-			 */
-			ArrayList path = new ArrayList();			
-			int v1Index,v2Index;
-			v1Index = v2Index = -1;
-
-			while (rs.next()) {
-			
-				int spId;
-				int v1,v2;
-				
-				/*
-				 * Retrieving the shortest Path values
-				 */
-				spId = rs.getInt("id");
-				v1 = rs.getInt("v1");
-				v2 = rs.getInt("v2");
-				
-				/*
-				 * Retrieving the relative node index from v1 and v2 in the graph
-				 */
-				// get the data of the nodes in database
-				String sqlSelectV1 = "select * FROM node WHERE id = " + v1;
-				String sqlSelectV2 = "select * FROM node WHERE id = " + v2;
-
-				// Set the new Statements
-				Statement stmt1 = connection.createStatement();
-				Statement stmt2 = connection.createStatement();
-				
-				ResultSet rsV1 = stmt1.executeQuery(sqlSelectV1);
-				ResultSet rsV2 = stmt2.executeQuery(sqlSelectV2);
-				
-				if (rsV1.next() && rsV2.next()) {
-					
-					/*
-					 * Retrieving the node relative index values
-					 */
-					v1Index = rsV1.getInt("index");
-					v2Index = rsV2.getInt("index");
-
-					/*
-					 * Retrieving the shortest connections representing the path in the graph
-					 */
-					String sqlSelectSC = "select * FROM shortest_path_edges WHERE sp_id = " + spId;
-
-					// Set the value
-					Statement stmtSC = connection.createStatement();
-					ResultSet rsSC = stmtSC.executeQuery(sqlSelectSC);
-					
-					while (rsSC.next()) {
-						
-						int edgeID;
-						
-						/*
-						 * Retrieving the Edge ID
-						 */
-						edgeID = rsSC.getInt("se_id");
-						
-						// get the data of the edge in database
-						String sqlSelectEDGE = "select * FROM edge WHERE id = " + edgeID;
-
-						// Set the value
-						Statement stmtEDGE = connection.createStatement();
-						ResultSet rsEDGE = stmtEDGE.executeQuery(sqlSelectEDGE);
-
-						/*
-						 * retrieving the edge
-						 */
-						if (rsEDGE.next()) {
-							
-							int v1INDEX,v2INDEX;
-							
-							/*
-							 * Retrieving the edge node values
-							 */
-							v1INDEX = rsEDGE.getInt("v1index");
-							v2INDEX = rsEDGE.getInt("v2index");
-
-
-								/*
-								 * Retrieving the correspondent edge from the graph
-								 */
-								Edge shortestEdge = result.getEdge(v1INDEX, v2INDEX);
-								
-								/*
-								 * Insert it into the shortest Path Edge Set
-								 */
-								path.add(shortestEdge);
-							}
-						} // end while
-				 
-				}
-										
-							/*
-							 * Inserting the Shortest Path on new graph
-							 */							
-				result.setShortestPath(v1Index, v2Index, path);
-				
-			} // end while
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}				
 	}
 	
 }

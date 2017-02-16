@@ -30,7 +30,6 @@ import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.io.FileFilter;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -54,27 +53,19 @@ public class NavigationView extends JPanel {
     /**
      * 
      */
-    JTree tree;
+    private JTree tree;
     /**
      * 
      */
-    ArrayList<NavigationObserver> observers;
+    private ArrayList<NavigationObserver> observers;
     /**
      * 
      */
-    DefaultMutableTreeNode algorithmsCategory;
+    private DefaultMutableTreeNode graphsCategory;
     /**
      * 
      */
-    DefaultMutableTreeNode graphsCategory;
-    /**
-     * 
-     */
-    DefaultMutableTreeNode animationsCategory;
-    /**
-     * 
-     */
-    MouseAdapter mouseAdapter;
+    private MouseAdapter mouseAdapter;
     
     /**
      * 
@@ -86,10 +77,6 @@ public class NavigationView extends JPanel {
         
         setLayout(new BorderLayout());
         add(tree,BorderLayout.CENTER);
-        /*JScrollPane scroll = new JScrollPane(tree);
-        add(scroll);
-        
-        scroll.setPreferredSize(new Dimension(150,200));*/
     }
     
     /**
@@ -114,8 +101,6 @@ public class NavigationView extends JPanel {
         model.setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         
         graphsCategory = new DefaultMutableTreeNode("graphs");
-        //algorithmsCategory = new DefaultMutableTreeNode("algorithms");
-        //animationsCategory = new DefaultMutableTreeNode("animations");
         
         mouseAdapter = new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
@@ -124,13 +109,8 @@ public class NavigationView extends JPanel {
         };
         tree.addMouseListener(mouseAdapter);
         
-        root.add(graphsCategory);
-        //root.add(algorithmsCategory);
-        //root.add(animationsCategory);
-        
+        root.add(graphsCategory);        
         loadGraphs();
-        //loadAlgorithms();
-        //loadAnimations();
     }
 
     /**
@@ -145,58 +125,19 @@ public class NavigationView extends JPanel {
 	            	if (node.getParent() != null) {
 		            	if (node.getParent().toString().equals("graphs")) {
 		                    for (int i=0 ; i<observers.size() ; i++)
-		                        ((NavigationObserver) observers.get(i)).graphSelected(node.toString());
+		                        (observers.get(i)).graphSelected(node.toString());
 		                }
 		                else if (node.getParent().toString().equals("animations")) {
 		                    for (int i=0 ; i<observers.size() ; i++)
-		                        ((NavigationObserver) observers.get(i)).animationSelected(node.toString());
+		                        (observers.get(i)).animationSelected(node.toString());
 		                }
 		                else if (node.getParent().toString().equals("algorithms")) {
 		                    for (int i=0 ; i<observers.size() ; i++)
-		                        ((NavigationObserver) observers.get(i)).algorithmSelected(node.toString());
+		                        (observers.get(i)).algorithmSelected(node.toString());
 		                }
 		            }
 		    }
     	}
-    }
-
-    /**
-     * 
-     */
-    private void loadAlgorithms() {
-        File algorithmsDirectory = 
-        	new File("." + File.separator + "user" + File.separator + "algorithms" + File.separator);
-        
-        File[] files = algorithmsDirectory.listFiles(new FileFilter() {
-
-            public boolean accept(File pathname) {
-                return pathname.getName().endsWith(".java");
-            }
-        });
-        algorithmsCategory.removeAllChildren();
-        
-        if (files != null) {
-	        for (int i=0 ; i<files.length ; i++) {
-	            algorithmsCategory.add(new DefaultMutableTreeNode(files[i].getName()));
-	        }
-        }
-    }
-
-    /**
-     * 
-     */
-    private void loadAnimations() {
-        File animationsDirectory = 
-        	new File("." + File.separator + "user" + File.separator + "animations" + File.separator);
-        
-        File[] files = animationsDirectory.listFiles();
-        animationsCategory.removeAllChildren();
-        
-        if (files != null) {
-	        for (int i=0 ; i<files.length ; i++) {
-	            animationsCategory.add(new DefaultMutableTreeNode(files[i].getName()));
-	        }
-        }
     }
 
     /**
@@ -220,9 +161,6 @@ public class NavigationView extends JPanel {
      */
     public void refresh() {
     	loadGraphs();
-        //loadAlgorithms();
-        //loadAnimations();
-        
         tree.updateUI();
     }
 }

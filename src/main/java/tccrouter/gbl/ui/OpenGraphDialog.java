@@ -146,7 +146,7 @@ public class OpenGraphDialog extends JDialog {
 				try {
 
 					daoFactory = AbstractDAOFactory.getDAOFactory(AbstractDAOFactory.XML_GRAPH,UIFacade.getInstance().getGraph());
-					UIFacade.getInstance().openGraph(getListItem(graphsList,graphs));
+					UIFacade.getInstance().openGraph(getListItem(graphsList,graphs), false);
 					
 					setVisible(false);
 				}

@@ -1,9 +1,9 @@
 package tccrouter.user.algorithms;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import tccrouter.diamante.core.command.Algorithm;
 import tccrouter.diamante.core.graph.Edge;
@@ -22,40 +22,34 @@ public class NearestNeighbor extends Algorithm {
 	/**
 	 * Array to indicate whether or not a node has been visited.
 	 */
-	LinkedList openNodes;	
-	LinkedList closedNodes;
-	LinkedList edgeSet;
+	private LinkedList<NodeHeuristicData> openNodes;	
+	private LinkedList<NodeHeuristicData> closedNodes;
 	
 	/**
 	 * Reference to the ExecutionTrace object to measure execution performance
 	 */
-    ExecutionTrace executionTrace;	
+	private ExecutionTrace executionTrace;	
 	
 	/**
 	 * The node from which the search will start.
 	 */
-	int start;
+	private int start;
 	/**
 	 * The active node Index for temporary evaluations.
 	 */
-	int activeNode;
+	private int activeNode;
 	
 	/**
 	 * The active node Heuristic Information
 	 */
-	NodeHeuristicData expandedNode; 			
+	private NodeHeuristicData expandedNode; 			
 	
 	/**
 	 * The goal nodes from which the search will end.
 	 */
-	int goals[];
-	
-	/**
-	 * The acumulated path length.
-	 */
-	double acumulatedDistance;
+	private int goals[];
 
-	boolean measureExecution; 
+	private boolean measureExecution; 
 	
 	/**
 	 * Creates an instance of this algorithm. Following the GraphEditor standard
@@ -70,9 +64,8 @@ public class NearestNeighbor extends Algorithm {
 		start = TSProblemModel.getInstance().getSourceNodeIndex();		
 		goals = TSProblemModel.getInstance().getClientNodes();
 		
-		openNodes = new LinkedList();
-		closedNodes = new LinkedList();
-		edgeSet = new LinkedList();
+		openNodes = new LinkedList<>();
+		closedNodes = new LinkedList<>();
 		
 		/*
 		 * update the shortest Path Matrix
@@ -91,10 +84,8 @@ public class NearestNeighbor extends Algorithm {
 
 		if (measureExecution) {
 			executionTrace.initialTrace();
-		}
-		
+		}		
 		activeNode = start;
-		acumulatedDistance = 0;
 		
 		for (int i = 0; i < goals.length; i++) {			
 			expandedNode = new NodeHeuristicData(g.getNode(goals[i]),start,g.shortestPathDistance(start, goals[i]));
@@ -123,15 +114,9 @@ public class NearestNeighbor extends Algorithm {
 			/*
 			 * Remove the first path from the queue; 
 			 */
-//			showOpenNodes();
-//			showClosedNodes();
-			
-			expandedNode = (NodeHeuristicData)openNodes.removeFirst(); 			
+			expandedNode = openNodes.removeFirst(); 			
 			activeNode = expandedNode.nodeIndex;
-									
-//			System.out.println("expanded Node = " + expandedNode.nodeIndex);
 			
-			acumulatedDistance += expandedNode.fatherDistance;			
 			setNewFather(activeNode);
 			closedNodes.add(expandedNode);
 								
@@ -140,7 +125,7 @@ public class NearestNeighbor extends Algorithm {
 			 *  with least-cost paths in front.
 			 */
 			Collections.sort(openNodes);			
-			}
+		}
 
 		/*
 		 * final time captured
@@ -148,49 +133,23 @@ public class NearestNeighbor extends Algorithm {
 		if (measureExecution) {
 			executionTrace.finalTrace();
 		}
-		
-//		showOpenNodes();
-//		showClosedNodes();
-		
 		colorPath();
-		
-		
+				
 		// Shows a reply message with the label and time of execution
 		OutputSender.showMessageDialog(
 			"Total execution Time: "+
 				executionTrace.getFinalTime() + " ms",
 			"Measured Time",
 			OutputSender.INFORMATION_MESSAGE
-		);
-		
+		);		
 	}
 
 	private void setNewFather(int activeNode2) {
-		for (Iterator iter = openNodes.iterator(); iter.hasNext();) {
+		for (Iterator<NodeHeuristicData> iter = openNodes.iterator(); iter.hasNext();) {
 			NodeHeuristicData element = (NodeHeuristicData) iter.next();
 			element.fatherIndex = activeNode2;
 			element.fatherDistance = g.shortestPathDistance(element.nodeIndex, activeNode2);
 		}				
-	}
-
-	private void showClosedNodes() {
-		
-		System.out.println("CLOSED");
-		for (Iterator iter = closedNodes.iterator(); iter.hasNext();) {
-			NodeHeuristicData element = (NodeHeuristicData) iter.next();
-			
-			System.out.println(" " + element.nodeIndex + "-" + element.fatherDistance);
-		}
-	}
-
-	private void showOpenNodes() {
-		
-		System.out.println("OPEN");
-		for (Iterator iter = openNodes.iterator(); iter.hasNext();) {
-			NodeHeuristicData element = (NodeHeuristicData) iter.next();
-			
-			System.out.println(" " + element.nodeIndex + "-" + element.fatherDistance);
-		}		
 	}
 
 	/**
@@ -204,11 +163,11 @@ public class NearestNeighbor extends Algorithm {
 			
 			if(g.existsPath(element.nodeIndex,element.fatherIndex)) {
 		    	 // Highlight the edge that has been used in the search path
-		    	ArrayList edges = (g.getShortestPath
+		    	List<Edge> edges = (g.getShortestPath
 		    	(element.nodeIndex,element.fatherIndex)).getEdgeSet();
 		    	
-		    	for (Iterator iter = edges.iterator(); iter.hasNext();) {
-		    		Edge e = (Edge)iter.next();
+		    	for (Iterator<Edge> iter = edges.iterator(); iter.hasNext();) {
+		    		Edge e = iter.next();
 		    		
 			    	 if (e != null) {
 			    		 g.setEdgeProperty(e.getV1(),e.getV2(),"ComponentColor","0,0,255");
@@ -217,10 +176,10 @@ public class NearestNeighbor extends Algorithm {
 			}
 			
 			if(closedNodes.isEmpty()) {
-		    	ArrayList edges = (g.getShortestPath(element.nodeIndex,start)).getEdgeSet();
+		    	List<Edge> edges = (g.getShortestPath(element.nodeIndex,start)).getEdgeSet();
 		    	
-		    	for (Iterator iter = edges.iterator(); iter.hasNext();) {
-		    		Edge e = (Edge)iter.next();
+		    	for (Iterator<Edge> iter = edges.iterator(); iter.hasNext();) {
+		    		Edge e = iter.next();
 		    		
 			    	 if (e != null) {
 			    		 g.setEdgeProperty(e.getV1(),e.getV2(),"ComponentColor","0,0,255");
@@ -237,7 +196,7 @@ public class NearestNeighbor extends Algorithm {
 	 * DataObjectWrapper, represents the heuristic knowledge needed to guide the search
 	 * algorithm.
 	 */
-	class NodeHeuristicData implements Comparable {
+	class NodeHeuristicData implements Comparable<NodeHeuristicData> {
 		
 		/*
 		 * public fields for obtaining performance
@@ -267,23 +226,21 @@ public class NearestNeighbor extends Algorithm {
 		 * @param arg0
 		 * @return
 		 */
-		public int compareTo(Object arg0) {
-				
-			NodeHeuristicData arg = (NodeHeuristicData) arg0;
-			
-			if (this.fatherIndex == arg.fatherIndex) {
-			if (fatherDistance < arg.fatherDistance) {
+		@Override
+		public int compareTo(NodeHeuristicData o) {
+			if (this.fatherIndex == o.fatherIndex) {
+			if (fatherDistance < o.fatherDistance) {
 				return -1;
-			} else if (fatherDistance > arg.fatherDistance) {
+			} else if (fatherDistance > o.fatherDistance) {
 				return 1;
 			} 
 			}
-			return 0; 			
-		}
+			return 0; 						
+		}						
 
 		public boolean equals(Object obj) {
 			NodeHeuristicData arg = (NodeHeuristicData) obj;
 			return (nodeIndex == arg.nodeIndex);
-		}						
+		}
 	}
 }

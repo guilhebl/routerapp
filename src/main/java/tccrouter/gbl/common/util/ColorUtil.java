@@ -1,8 +1,8 @@
 package tccrouter.gbl.common.util;
 
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import tccrouter.diamante.core.graph.Edge;
 import tccrouter.diamante.core.graph.Graph;
@@ -57,10 +57,10 @@ public class ColorUtil {
 				
         // calculate round-trip distance
 		ShortestPath path = g.getShortestPath(sourceNode ,clientNodes[clientNodes.length -1]);		
-		ArrayList edgeSet = path.getEdgeSet();
+		List<Edge> edgeSet = path.getEdgeSet();
 		
-		for (Iterator iter = edgeSet.iterator(); iter.hasNext();) {
-			Edge element = (Edge) iter.next();
+		for (Iterator<Edge> iter = edgeSet.iterator(); iter.hasNext();) {
+			Edge element = iter.next();
 			g.setEdgeProperty(element.getV1(),element.getV2(),"ComponentColor",pathColors[colorCounter]);
 		}
 
@@ -68,8 +68,8 @@ public class ColorUtil {
 		path = g.getShortestPath(sourceNode ,clientNodes[0]);		
 		edgeSet = path.getEdgeSet();
 		
-		for (Iterator iter = edgeSet.iterator(); iter.hasNext();) {
-			Edge element = (Edge) iter.next();
+		for (Iterator<Edge> iter = edgeSet.iterator(); iter.hasNext();) {
+			Edge element = iter.next();
 			g.setEdgeProperty(element.getV1(),element.getV2(),"ComponentColor",pathColors[colorCounter]);
 		}
 		
@@ -78,8 +78,8 @@ public class ColorUtil {
 			path = g.getShortestPath(clientNodes[i-1], clientNodes[i]);		
 			edgeSet = path.getEdgeSet();
 			
-			for (Iterator iter = edgeSet.iterator(); iter.hasNext();) {
-				Edge element = (Edge) iter.next();
+			for (Iterator<Edge> iter = edgeSet.iterator(); iter.hasNext();) {
+				Edge element = iter.next();
 				g.setEdgeProperty(element.getV1(),element.getV2(),"ComponentColor",pathColors[colorCounter]);
 			}			
 			
@@ -97,10 +97,10 @@ public class ColorUtil {
 		
         //		 calculate round-trip distance
 		ShortestPath path = g.getShortestPath(clientNodes[0], clientNodes[clientNodes.length -1]);		
-		ArrayList edgeSet = path.getEdgeSet();
+		List<Edge> edgeSet = path.getEdgeSet();
 		
-		for (Iterator iter = edgeSet.iterator(); iter.hasNext();) {
-			Edge element = (Edge) iter.next();
+		for (Iterator<Edge> iter = edgeSet.iterator(); iter.hasNext();) {
+			Edge element = iter.next();
 			g.setEdgeProperty(element.getV1(),element.getV2(),"ComponentColor","0,0,255");
 		}
 		
@@ -111,8 +111,8 @@ public class ColorUtil {
 			if (path != null) {
 				edgeSet = path.getEdgeSet();
 				
-				for (Iterator iter = edgeSet.iterator(); iter.hasNext();) {
-					Edge element = (Edge) iter.next();
+				for (Iterator<Edge> iter = edgeSet.iterator(); iter.hasNext();) {
+					Edge element = iter.next();
 					g.setEdgeProperty(element.getV1(),element.getV2(),"ComponentColor","0,0,255");
 				}			
 				

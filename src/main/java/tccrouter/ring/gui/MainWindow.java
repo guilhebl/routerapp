@@ -57,7 +57,6 @@ import tccrouter.diamante.core.graph.layout.GraphLayout;
 import tccrouter.gbl.ui.AIPreferencesWindow;
 import tccrouter.gbl.ui.GASettings;
 import tccrouter.gbl.ui.GeneralSettings;
-import tccrouter.gbl.ui.OpenGraphDialog;
 import tccrouter.gbl.ui.LocalSearchSettings;
 import tccrouter.gbl.ui.SimulatedAnnealingSettings;
 import tccrouter.gbl.ui.VRPSettings;
@@ -78,100 +77,105 @@ import tccrouter.ring.gui.graphdrawing.GraphWorkspace;
 public class MainWindow extends JFrame {
     
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -885154489439217449L;
+
+	/**
      * The unique instance to this class.
      */
-    static MainWindow instance;
+    private static MainWindow instance;
     
     /**
      * Description text of the nodes mode.
      */
-    final static String NODE_TOOLTIP   = "Operate on nodes";
+    private final static String NODE_TOOLTIP   = "Operate on nodes";
     /**
      * Description text of the edge mode.
      */
-    final static String EDGE_TOOLTIP   = "Operate on edges";
+    private final static String EDGE_TOOLTIP   = "Operate on edges";
     /**
      * Description text of the eraser mode.
      */
-    final static String ERASER_TOOLTIP = "Remove components from the graph";
+    private final static String ERASER_TOOLTIP = "Remove components from the graph";
     /**
      * Description text of the undo action.
      */
-    final static String UNDO_TOOLTIP   = "Unexecutes the latest command";
+    private final static String UNDO_TOOLTIP   = "Unexecutes the latest command";
     /**
      * Description text of the redo action.
      */
-    final static String REDO_TOOLTIP   = "Re-executes the latest undone command";
+    private final static String REDO_TOOLTIP   = "Re-executes the latest undone command";
 
     /**
      * Description text of the clear properties action.
      */
-    final static String CLEAR_PROPERTIES_TIP = "Clear properties";
+    private final static String CLEAR_PROPERTIES_TIP = "Clear properties";
     /**
      * The toolbar where the buttons used by the user are shown.
      */
-    JToolBar toolbar;
+    private JToolBar toolbar;
     /**
      * The menu used by the main window.
      */
-    Menu menu;
+    private Menu menu;
     /**
      * The workspace where graphs are shown.
      */
-    GraphWorkspace workspace;
+    private GraphWorkspace workspace;
     /**
      * The status bar text where messages are placed.
      */
-    JLabel status;
+    private JLabel status;
     /**
      * The button that changes the active mode to 'node'.
      */
-	JToggleButton nodeButton;
+    private JToggleButton nodeButton;
 	/**
 	 * The button that changes the active mode to 'edge'.
 	 */
-	JToggleButton edgeButton;
+    private JToggleButton edgeButton;
 	/**
 	 * The button that changes the active mode to 'eraser'.
 	 */
-	JToggleButton eraserButton;
+    private JToggleButton eraserButton;
 	/**
 	 * The button that will undo the latest command.
 	 */
-	JButton undoButton;
+    private JButton undoButton;
 	/**
 	 * The button that will redo the next command.
 	 */
-	JButton redoButton;
+    private JButton redoButton;
 	/**
 	 * The button that clears changes made to the active graph's properties.
 	 */
-	JButton clearPropertiesButton;
+    private JButton clearPropertiesButton;
 	
 	
 	/**
 	 * The button that will appear when user has to point the end at node selection
 	 * process in some actions.
 	 */
-	JButton endButton;
+    private JButton endButton;
 	
 	/**
 	 * The factory of the DAO object that will deal with secondary
 	 * graph input and output.
 	 */
-	AbstractDAOFactory daoFactory;
+    private AbstractDAOFactory daoFactory;
 	/**
 	 * 
 	 */
-	UIFacade uiFacade = UIFacade.getInstance();
+    private UIFacade uiFacade = UIFacade.getInstance();
 	/**
 	 * 
 	 */
-	NavigationView navigationView;
+    private NavigationView navigationView;
 	/**
 	 * 
 	 */
-	UIView centerView;
+    private UIView centerView;
 	/**
 	 * 
 	 */
@@ -180,31 +184,29 @@ public class MainWindow extends JFrame {
     /**
      * The actions
      */
-	Action NODE_ACTION;
-	Action EDGE_ACTION;
-	Action ERASER_ACTION;	
-	Action UNDO_ACTION;
-	Action REDO_ACTION;
-	Action END_ACTION;
-	Action SPECIAL_GRAPH_ACTION;
-	Action ADD_ALGORITHM_ACTION;	
-	Action MANAGE_MENU_ACTION;
-	Action CLEAR_PROPERTIES_ACTION;
-	Action ABOUT_ACTION;
-	Action PREFERENCES_ACTION;
-	Action AI_PREFERENCES_ACTION;
-	Action VRP_SETTINGS_ACTION;
-	Action GA_SETTINGS_ACTION;
-	Action LSD_SETTINGS_ACTION;
-	Action SA_SETTINGS_ACTION;
-	Action GENERAL_AI_SETTINGS_ACTION;
-	Action EXIT_ACTION;
-	Action SAVE_JDBC_GRAPH_ACTION;
-	Action OPEN_JDBC_GRAPH_ACTION;
-	Action SAVE_XML_GRAPH_ACTION;
-	Action OPEN_XML_GRAPH_ACTION;
-	Action LOAD_ALGORITHM_ANIMATION_ACTION;
-	Action EMPTY_GRAPH_ACTION;
+	private Action NODE_ACTION;
+	private Action EDGE_ACTION;
+	private Action ERASER_ACTION;	
+	private Action UNDO_ACTION;
+	private Action REDO_ACTION;
+	private Action END_ACTION;
+	private Action SPECIAL_GRAPH_ACTION;
+	private Action ADD_ALGORITHM_ACTION;	
+	private Action MANAGE_MENU_ACTION;
+	private Action CLEAR_PROPERTIES_ACTION;
+	private Action ABOUT_ACTION;
+	private Action PREFERENCES_ACTION;
+	private Action AI_PREFERENCES_ACTION;
+	private Action VRP_SETTINGS_ACTION;
+	private Action GA_SETTINGS_ACTION;
+	private Action LSD_SETTINGS_ACTION;
+	private Action SA_SETTINGS_ACTION;
+	private Action GENERAL_AI_SETTINGS_ACTION;
+	private Action EXIT_ACTION;
+	private Action SAVE_XML_GRAPH_ACTION;
+	private Action OPEN_XML_GRAPH_ACTION;
+	private Action LOAD_ALGORITHM_ANIMATION_ACTION;
+	private Action EMPTY_GRAPH_ACTION;
 	
     /**
      * Creates an instance to this class, placing all the components and creating
@@ -236,8 +238,6 @@ public class MainWindow extends JFrame {
         menu.addSubMenu(new JMenu("New..."),"File","Create a new graph",true);
         menu.addItemToSubMenu(EMPTY_GRAPH_ACTION,"File","New...","Create an empty graph",true);
         menu.addItemToSubMenu(SPECIAL_GRAPH_ACTION,"File","New...","Create a special graph",false);
-        menu.addMenuItem(OPEN_JDBC_GRAPH_ACTION,"File","Open a graph from DataBase",false);
-        menu.addMenuItem(SAVE_JDBC_GRAPH_ACTION,"File","Save a graph to DataBase",false);
         menu.addMenuItem(OPEN_XML_GRAPH_ACTION,"File","Open a graph from file",false);
         menu.addMenuItem(SAVE_XML_GRAPH_ACTION,"File","Save a graph to file",false);        
         menu.addMenuItem(LOAD_ALGORITHM_ANIMATION_ACTION,"File","Load an algorithm animation from file",true);
@@ -416,25 +416,6 @@ public class MainWindow extends JFrame {
 		};
 		
 		/**
-		 * The action taken when the user clicks on the "Add algorithm" menu item.
-		 */
-		ADD_ALGORITHM_ACTION = new AbstractAction("Add algorithm") {
-			public void actionPerformed (ActionEvent evt) {
-//				final AlgorithmFileChooser chooser = AlgorithmFileChooser.getInstance();
-//				int option = chooser.chooseFile();
-//
-//				if (option == JFileChooser.APPROVE_OPTION) {
-//					if (chooser.getLastSelectedFileName() != null ||
-//						chooser.getLastSelectedFileURL()  != null) {
-//						addAlgorithm(chooser.getLastSelectedFileURL(),chooser.getLastSelectedFileName());
-//		
-//						ProfileController.getInstance().addAlgorithm(chooser.getLastSelectedFileName(),true);
-//					}
-//				}
-			}
-		};
-		
-		/**
 		 * The action taken when the user clicks on the "Manage menu" menu item.
 		 */
 		MANAGE_MENU_ACTION = new AbstractAction("Manage menu") {
@@ -540,26 +521,7 @@ public class MainWindow extends JFrame {
 		/**
 		 * The action taken when the user clicks on the "Save" menu item.
 		 */
-		SAVE_JDBC_GRAPH_ACTION = new AbstractAction("Save") {
-			public void actionPerformed (ActionEvent evt) {
-				OpenGraphDialog.getInstance().buildSaveWindow();
-				OpenGraphDialog.getInstance().setVisible(true);			
-			}
-		};
-		/**
-		 * 
-		 */
-		OPEN_JDBC_GRAPH_ACTION = new AbstractAction("Open") {
-			public void actionPerformed (ActionEvent evt) {
-				OpenGraphDialog.getInstance().buildLoadWindow();
-				OpenGraphDialog.getInstance().setVisible(true);			
-			}
-		};
-		
-		/**
-		 * The action taken when the user clicks on the "Save" menu item.
-		 */
-		SAVE_XML_GRAPH_ACTION = new AbstractAction("Save Graph-XML") {
+		SAVE_XML_GRAPH_ACTION = new AbstractAction("Save") {
 			public void actionPerformed (ActionEvent evt) {
 				daoFactory = AbstractDAOFactory.getDAOFactory(AbstractDAOFactory.XML_GRAPH,uiFacade.getGraph());
 				daoFactory.makeObject();
@@ -567,39 +529,23 @@ public class MainWindow extends JFrame {
 			}
 		};
 
-		OPEN_XML_GRAPH_ACTION = new AbstractAction("Open Graph-XML") {
+		OPEN_XML_GRAPH_ACTION = new AbstractAction("Open") {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 2376323688248143711L;
+
 			public void actionPerformed (ActionEvent evt) {
 				daoFactory = AbstractDAOFactory.getDAOFactory(AbstractDAOFactory.XML_GRAPH,null);
 				
 				XMLFileChooser fc = XMLFileChooser.getInstance();
 				fc.chooseOpenFile("." + File.separator + "user" + File.separator + "graphs");
-				String xmlFileName = null;
 
-				if (fc.getLastSelectedFileName() != null
-					&& fc.getLastSelectedFileURL() != null) {
-					xmlFileName = fc.getLastSelectedFileName();
-					
-					uiFacade.openGraph(xmlFileName);
+				if (fc.getSelectedFile() != null) {					
+					uiFacade.openGraph(fc.getSelectedFile().getAbsolutePath(), true);
 				}
 			}
 		};
-
-//		LOAD_ALGORITHM_ANIMATION_ACTION = new AbstractAction("Load algorithm animation") {
-//			public void actionPerformed (ActionEvent evt) {
-//				daoFactory = AbstractDAOFactory.getDAOFactory(AbstractDAOFactory.XML_ANIMATION,null);
-//				
-//				XMLFileChooser fc = XMLFileChooser.getInstance();
-//				fc.chooseOpenFile("." + File.separator + "user" + File.separator + "animations");
-//				String xmlFileName = null;
-//
-//				if (fc.getLastSelectedFileName() != null
-//					&& fc.getLastSelectedFileURL() != null) {
-//					xmlFileName = fc.getLastSelectedFileName();
-//					
-//					uiFacade.loadAnimation(xmlFileName);
-//				}
-//			}
-//		};
 
 		EMPTY_GRAPH_ACTION = new AbstractAction("Empty graph") {
 			public void actionPerformed (ActionEvent evt) {

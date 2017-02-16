@@ -4,8 +4,6 @@ package tccrouter.gbl.common.entity;
 /**
  * Contains the code to measure the 
  * resource management of an executing heuristic.
- * 
- * @author Guilherme Becker Lamounier 
  */
 public class ExecutionTrace {
 

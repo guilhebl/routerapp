@@ -1,6 +1,6 @@
 package tccrouter.diamante.extension.graph;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import tccrouter.diamante.core.graph.Edge;
 import tccrouter.diamante.core.graph.Graph;
@@ -11,7 +11,7 @@ import tccrouter.gbl.common.entity.ShortestPath;
 public class SimpleGraph extends Graph
 {
 
-    Matrix adjacencies;
+    protected Matrix adjacencies;
 
     public SimpleGraph()
     {
@@ -108,11 +108,6 @@ public class SimpleGraph extends Graph
 		return 0;
 	}
 
-	public void setShortestPath(int i, int j, ArrayList edgeSet) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public boolean existsPath(int i, int j) {
 		// TODO Auto-generated method stub
 		return false;
@@ -124,6 +119,12 @@ public class SimpleGraph extends Graph
 	}
 
 	public void updateShortestPathDistance(int i, int j) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setShortestPath(int i, int j, List<Edge> edgeSet) {
 		// TODO Auto-generated method stub
 		
 	}
