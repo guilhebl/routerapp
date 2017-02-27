@@ -1,5 +1,8 @@
 # routerapp
-Graph Routing Simulation Tool. Java Desktop educational application.
+Java Graph app. A Desktop educational application for building graphs and simulating routing and graph based algorithms.
+It uses a 2d map enabling users to create nodes, edges and connect them together, creating different types of graphs 
+and save them on filesystem as XML. Builds and applies algorithms on top of graph problems and displays results.
+
 Instructions to create workspace configuration 
 ------------------------------------------------------------------------------------------------------------------
 
