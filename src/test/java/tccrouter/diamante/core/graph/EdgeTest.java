@@ -25,16 +25,6 @@ public class EdgeTest {
   }
 
   @Test
-  public void test002() throws Throwable {
-
-    if (debug) { System.out.format("%n%s%n","RegressionTest0.test002"); }
-
-    tccrouter.diamante.core.graph.property.ComponentProperties componentProperties2 = null;
-    tccrouter.diamante.core.graph.Edge edge3 = new tccrouter.diamante.core.graph.Edge((int)(short)1, 52, componentProperties2);
-
-  }
-
-  @Test
   public void test003() throws Throwable {
 
     if (debug) { System.out.format("%n%s%n","RegressionTest0.test003"); }
@@ -558,16 +548,6 @@ public class EdgeTest {
     
     // Regression assertion (captures the current behavior of the code)
     org.junit.Assert.assertNull(componentProperties12);
-
-  }
-
-  @Test
-  public void test024() throws Throwable {
-
-    if (debug) { System.out.format("%n%s%n","RegressionTest0.test024"); }
-
-    tccrouter.diamante.core.graph.property.ComponentProperties componentProperties2 = null;
-    tccrouter.diamante.core.graph.Edge edge3 = new tccrouter.diamante.core.graph.Edge((int)'a', (int)(byte)0, componentProperties2);
 
   }
 
@@ -2148,16 +2128,6 @@ public class EdgeTest {
     
     // Regression assertion (captures the current behavior of the code)
     org.junit.Assert.assertTrue(i10 == 0);
-
-  }
-
-  @Test
-  public void test086() throws Throwable {
-
-    if (debug) { System.out.format("%n%s%n","RegressionTest0.test086"); }
-
-    tccrouter.diamante.core.graph.property.ComponentProperties componentProperties2 = null;
-    tccrouter.diamante.core.graph.Edge edge3 = new tccrouter.diamante.core.graph.Edge((int)(byte)10, 52, componentProperties2);
 
   }
 

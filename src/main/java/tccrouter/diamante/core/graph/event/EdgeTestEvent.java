@@ -7,8 +7,13 @@ package tccrouter.diamante.core.graph.event;
 public class EdgeTestEvent extends GraphEvent
 {
 
-    int n1;
-    int n2;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 924547057294168450L;
+	
+	private int n1;
+    private int n2;
 
     public EdgeTestEvent(Object obj, int n1, int n2)
     {

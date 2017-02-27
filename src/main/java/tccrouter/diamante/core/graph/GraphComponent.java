@@ -5,7 +5,7 @@ import tccrouter.diamante.core.graph.property.ComponentProperties;
 public class GraphComponent
 {
 
-    ComponentProperties properties;
+    private ComponentProperties properties;
 
     public GraphComponent(ComponentProperties properties)
     {

@@ -5,7 +5,12 @@ import java.util.EventObject;
 public class GraphEvent extends EventObject
 {
 
-    public GraphEvent(Object obj)
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -4836988386380833309L;
+
+	public GraphEvent(Object obj)
     {
         super(obj);
     }
